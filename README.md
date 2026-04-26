@@ -46,7 +46,7 @@ This project:
 |---|---|
 | Windows 10 / 11 (64-bit) | 32-bit Windows is not supported |
 | Python 3.8+ (64-bit) | [python.org](https://www.python.org/downloads/) — match the system bitness |
-| ElevenLabs account | Free tier works; paid gives more monthly quota |
+| ElevenLabs account | Free tier works; paid gives more monthly quota — [click here to sign up](https://try.elevenlabs.io/dr97m3vet6ly) |
 | Internet connection | Audio is streamed in real time |
 
 ---
