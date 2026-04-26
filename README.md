@@ -1,3 +1,5 @@
+<a href="https://www.buymeacoffee.com/xTaraRose" target="_blank"><img src="https://cdn.buymeacoffee.com/buttons/v2/default-purple.png" alt="Buy Me A Coffee" style="height: 60px !important;width: 217px !important;"></a>
+
 # Windows SAPI Bridge for ElevenLabs
 
 > **Seamless ElevenLabs TTS — everywhere Windows speaks.**
@@ -243,3 +245,8 @@ MIT — see `LICENSE` for details.
 ---
 
 *Made with frustration and determination by [@xTaraRose](https://github.com/xTaraRose)*
+
+
+---
+
+<a href="https://www.buymeacoffee.com/xTaraRose" target="_blank"><img src="https://cdn.buymeacoffee.com/buttons/v2/default-purple.png" alt="Buy Me A Coffee" style="height: 60px !important;width: 217px !important;"></a>
