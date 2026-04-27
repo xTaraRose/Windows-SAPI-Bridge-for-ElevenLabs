@@ -289,14 +289,22 @@ class ElevenLabsTTSEngine(CoClass):
         self._config:   dict = {}
         log.info('ElevenLabsTTSEngine instance created')
 
+    def QueryInterface(self, riid, ppvObj):
+        from comtypes import GUID
+        log.info('QueryInterface: riid=%s', riid)
+        return super().QueryInterface(riid, ppvObj)
+
     def SetObjectToken(self, pToken):
-        log.debug('SetObjectToken (pToken=0x%X)', pToken or 0)
+        log.info('SetObjectToken() called with pToken=0x%X', pToken or 0)
         if not pToken:
+            log.info('SetObjectToken: NULL token, returning S_OK')
             return S_OK
         try:
             self._config   = load_config()
             self._voice_id = token_get_string_value(pToken, 'ElevenLabsVoiceId')
-            log.info('Voice ID: %r', self._voice_id)
+            log.info('SetObjectToken: Successfully set voice_id=%r', self._voice_id)
+            if not self._voice_id:
+                log.warning('SetObjectToken: Warning - voice_id is empty!')
         except Exception:
             log.exception('SetObjectToken failed')
         return S_OK
@@ -306,7 +314,7 @@ class ElevenLabsTTSEngine(CoClass):
 
     def GetOutputFormat(self, pTargetFmtId, pTargetWaveFormatEx,
                         pDesiredFormatId, ppCoMemDesiredWaveFormatEx):
-        log.debug('GetOutputFormat called')
+        log.info('GetOutputFormat() called')
         try:
             if pDesiredFormatId:
                 ctypes.memmove(pDesiredFormatId, bytes(SPDFID_WaveFormatEx), 16)
@@ -337,7 +345,7 @@ class ElevenLabsTTSEngine(CoClass):
         """
         Walk SPVTEXTFRAG list → resolve speed → stream ElevenLabs PCM → SAPI.
         """
-        log.debug('Speak (flags=0x%X)', dwSpeakFlags)
+        log.info('Speak() called! (flags=0x%X, voice_id=%r)', dwSpeakFlags, self._voice_id)
         try:
             if not self._voice_id:
                 log.error('Speak: no voice ID')
