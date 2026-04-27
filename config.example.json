@@ -7,15 +7,21 @@
 
     "_comment_voice": "Voice quality settings (all 0.0 – 1.0)",
     "stability": 0.5,
+    "_default_stability": 0.5,
     "similarity_boost": 0.75,
+    "_default_similarity_boost": 0.75,
     "style": 0.0,
+    "_default_style": 0.0,
     "use_speaker_boost": true,
+    "_default_use_speaker_boost": true,
 
     "_comment_speed": "Baseline playback speed. Range: 0.5 (half speed) – 2.0 (double speed). 1.0 = normal.",
     "speed": 1.0,
+    "_default_speed": 1.0,
 
     "_comment_sapi_rate": "When true, the engine also honours the rate slider in SAPI apps that provide one.",
     "_comment_sapi_rate2": "Each SAPI rate unit adds/subtracts 5% on top of the 'speed' baseline above.",
     "_comment_sapi_rate3": "Set to false to ignore the app's rate control and use only 'speed' above.",
-    "sapi_rate_scaling": true
+    "sapi_rate_scaling": true,
+    "_default_sapi_rate_scaling": true
 }

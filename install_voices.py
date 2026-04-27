@@ -15,12 +15,17 @@ import json
 import re
 import ctypes
 import requests
+import io
 
 try:
     import winreg
 except ImportError:
     print('ERROR: This script must be run on Windows.')
     sys.exit(1)
+
+# Force UTF-8 output on Windows
+if sys.stdout.encoding.lower() != 'utf-8':
+    sys.stdout = io.TextIOWrapper(sys.stdout.buffer, encoding='utf-8')
 
 # ─── Paths & constants ────────────────────────────────────────────────────────
 
