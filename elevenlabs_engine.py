@@ -279,6 +279,7 @@ class ISpTTSEngine(IUnknown):
 
 class ElevenLabsTTSEngine(CoClass):
     _reg_clsid_      = CLSID_ElevenLabsEngine
+    _reg_clsctx_     = 5  # CLSCTX_LOCAL_SERVER
     _reg_desc_       = 'ElevenLabs TTS Engine'
     _reg_progid_     = 'ElevenLabsSAPI.Engine'
     _com_interfaces_ = [ISpTTSEngine, ISpObjectWithToken]
