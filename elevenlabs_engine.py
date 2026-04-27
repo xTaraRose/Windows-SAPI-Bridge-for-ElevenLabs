@@ -87,7 +87,7 @@ from comtypes import GUID, IUnknown, HRESULT, STDMETHOD, CoClass
 
 # ─── SAPI 5 GUIDs ─────────────────────────────────────────────────────────────
 
-IID_ISpTTSEngine       = GUID('{A74D7C8E-4CC9-4FBE-8B0F-7BEBE35B4D22}')
+IID_ISpTTSEngine       = GUID('{A74D7C8E-4CC5-4F2F-A6EB-804DEE18500E}')
 IID_ISpObjectWithToken = GUID('{5B559F40-E952-11D2-BB91-00C04F8EE6C0}')
 SPDFID_WaveFormatEx    = GUID('{C31ADBAE-527F-4FF5-A230-F62BB61FF70C}')
 CLSID_ElevenLabsEngine = GUID('{6C0A3A4E-8F2B-4E5D-A3C7-1B9F2E8D4A6C}')
