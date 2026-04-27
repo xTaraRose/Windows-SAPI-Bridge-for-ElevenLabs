@@ -257,7 +257,7 @@ class ISpObjectWithToken(IUnknown):
     _iid_     = IID_ISpObjectWithToken
     _methods_ = [
         STDMETHOD(HRESULT, 'SetObjectToken', [ctypes.c_void_p]),
-        STDMETHOD(HRESULT, 'GetObjectToken',  [ctypes.c_void_p]),
+        STDMETHOD(HRESULT, 'GetObjectToken',  [ctypes.POINTER(ctypes.c_void_p)]),
     ]
 
 
@@ -270,7 +270,7 @@ class ISpTTSEngine(IUnknown):
         ]),
         STDMETHOD(HRESULT, 'GetOutputFormat', [
             ctypes.c_void_p, ctypes.c_void_p,
-            ctypes.c_void_p, ctypes.c_void_p,
+            ctypes.c_void_p, ctypes.POINTER(ctypes.c_void_p),
         ]),
     ]
 
@@ -288,11 +288,6 @@ class ElevenLabsTTSEngine(CoClass):
         self._voice_id: str  = ''
         self._config:   dict = {}
         log.info('ElevenLabsTTSEngine instance created')
-
-    def QueryInterface(self, riid, ppvObj):
-        from comtypes import GUID
-        log.info('QueryInterface: riid=%s', riid)
-        return super().QueryInterface(riid, ppvObj)
 
     def SetObjectToken(self, pToken):
         log.info('SetObjectToken() called with pToken=0x%X', pToken or 0)
