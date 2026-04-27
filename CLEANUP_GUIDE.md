@@ -162,35 +162,71 @@ Right-click **Command Prompt** → **Run as Administrator** before running the s
 
 ### Still seeing high CPU usage after cleanup
 
-1. **Restart the computer** — Windows services may need to reinitialize
-2. **Manually check Event Viewer:**
-   - Open **Event Viewer** → **Windows Logs** → **System**
-   - Look for errors related to "ElevenLabs" or "COM"
-   - These should be gone after cleanup + restart
+**Important:** The issue may be a lingering CLSID entry that wasn't fully removed.
 
-3. **If problems persist:**
-   - Run `cleanup_sapi_bridge.py --verbose` again to see what it's removing
+1. **Run the diagnostic tool** to identify the root cause:
+   ```bash
+   python diagnose_cpu_usage.py
+   ```
+   This will check for orphaned CLSID entries and other artifacts.
+
+2. **If CLSID still exists:**
+   - Run `cleanup_sapi_bridge.py --verbose` again with full administrator privileges
+   - Ensure you see "Successfully removed engine CLSID" in the output
+
+3. **Restart the computer** — Windows services need to reload the registry without the orphaned CLSID
+
+4. **Verify the fix:**
+   ```powershell
+   powershell -NoProfile -ExecutionPolicy Bypass -File verify_cleanup.ps1
+   ```
+
+5. **If problems persist after restart:**
+   - Check Event Viewer for COM initialization errors (should be gone)
+   - Run `cleanup_sapi_bridge.py --verbose` again to see what's being removed
    - Check if other SAPI5 installations might be conflicting
-   - Consider creating a system restore point and checking Event Viewer errors in detail
+   - Consider a malware scan (anti-virus/anti-malware)
+   - Check Intel Rapid Storage Technology driver for updates
+
+### The CLSID Registry Issue
+
+If you see "CLSID still exists in registry" in the diagnostic output:
+
+1. The registry key `HKEY_LOCAL_MACHINE\SOFTWARE\Classes\CLSID\{6C0A3A4E-8F2B-4E5D-A3C7-1B9F2E8D4A6C}` wasn't removed by the cleanup
+2. Windows keeps trying to initialize this broken COM object, causing high CPU
+3. Run `cleanup_sapi_bridge.py` again — it's designed specifically to remove this
 
 ### Want to verify the cleanup worked?
 
+**Option 1: Automated verification (recommended)**
+```powershell
+powershell -NoProfile -ExecutionPolicy Bypass -File verify_cleanup.ps1
+```
+
+**Option 2: Manual verification with Registry Editor**
 Open **Registry Editor** (`regedit`) and check:
 1. `HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Speech\Voices\Tokens` — should have no `ElevenLabs_` entries
 2. `HKEY_LOCAL_MACHINE\SOFTWARE\Classes\CLSID\{6C0A3A4E-8F2B-4E5D-A3C7-1B9F2E8D4A6C}` — should not exist
 
 ## Still Having Issues?
 
-If you still experience problems after cleanup:
+If you still experience problems after cleanup and restart:
 
-1. **Comment on the GitHub issue** with:
+1. **Run the diagnostic tool and save the report:**
+   ```bash
+   python diagnose_cpu_usage.py
+   ```
+   This generates `cpu_diagnostic_report.json` with detailed findings
+
+2. **Comment on the GitHub issue** with:
    - Output from `python cleanup_sapi_bridge.py --verbose`
-   - What you see in **Event Viewer** errors
+   - Results from `python diagnose_cpu_usage.py`
+   - What you see in **Event Viewer** errors (Event Viewer → Windows Logs → System)
    - When the issue started (after moving files, cloning repo, etc.)
 
-2. **Check Event Viewer for root cause:**
+3. **Check Event Viewer manually for root cause:**
    - Event Viewer → Windows Logs → System
-   - Look for errors containing "ElevenLabs", "COM", "CLSID", or "Service"
-   - These logs will show the exact registry path causing issues
+   - Look for errors containing "ElevenLabs", "COM", "CLSID", "IAStorDataMgrSvc", or "Service"
+   - These logs will show the exact registry path or service causing issues
 
 This information helps us improve the cleanup utility and prevent similar issues in the future.

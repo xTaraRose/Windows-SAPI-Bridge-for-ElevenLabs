@@ -6,6 +6,32 @@
 
 ---
 
+## ⚠️ EXPERIENCING HIGH CPU USAGE? Quick Fix
+
+If your system is experiencing **persistent high CPU usage from `IAStorDataMgrSvc` or `svchost` processes** after installing or using the SAPI Bridge, this is likely caused by orphaned registry entries from a previous installation.
+
+**Quick Fix (2 steps):**
+
+1. **Run the emergency cleanup as Administrator:**
+   ```bash
+   python cleanup_sapi_bridge.py --verbose
+   ```
+
+2. **Restart your computer** — Windows needs to reload the registry
+
+**Verify the fix worked:**
+```powershell
+powershell -NoProfile -ExecutionPolicy Bypass -File verify_cleanup.ps1
+```
+
+Expected output: `SUCCESS: System is clean! SAPI Bridge completely removed.`
+
+**Why this happens:** If you've moved SAPI Bridge files to a new location without uninstalling first, or if `uninstall_voices.py` failed to complete, the Windows registry retains broken COM object references. The most common culprit is the orphaned engine **CLSID `{6C0A3A4E-8F2B-4E5D-A3C7-1B9F2E8D4A6C}`** remaining in `HKEY_LOCAL_MACHINE\SOFTWARE\Classes\CLSID`. Windows repeatedly attempts to initialize this broken COM object on startup, causing high CPU cycling.
+
+**For detailed information:** See [CLEANUP_GUIDE.md](CLEANUP_GUIDE.md) and [DIAGNOSTIC_FINDINGS.md](DIAGNOSTIC_FINDINGS.md) for the root cause analysis and advanced troubleshooting.
+
+---
+
 ## 🚀 Status: Project Pivot → ElevenLabs Speech Synthesis Platform
 
 ⚠️ **This SAPI5 Bridge is a Proof of Concept**
