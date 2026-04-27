@@ -6,19 +6,47 @@
 
 ---
 
+## 🚀 Status: Project Pivot → ElevenLabs Speech Synthesis Platform
+
+⚠️ **This SAPI5 Bridge is a Proof of Concept**
+
+After investigating the SAPI5 approach, we discovered fundamental technical limitations with comtypes' LocalServer32 marshaling. Rather than fighting deprecated technology, we've pivoted to something better:
+
+### The New Direction: [ElevenLabs Speech Synthesis Platform](https://github.com/xTaraRose/ElevenLabs-Speech-Synthesis)
+
+A **unified, decentralized platform** with a local Windows Service + plugin ecosystem that works with modern applications (Calibre, NVDA, Windows.Media.SpeechSynthesis, and more).
+
+**Why this approach is better:**
+- 🎯 **Not tied to SAPI5** — which many applications (Calibre, etc.) are abandoning
+- 🔌 **Plugin architecture** — adds ElevenLabs support to any application
+- 👤 **User-owned** — each user provides their own API key (no backend dependency)
+- ⚙️ **Single configuration** — set up once, use everywhere
+- 🔒 **Secure** — encrypted key storage, localhost-only communication
+- 📈 **Future-proof** — uses modern Windows APIs (Windows.Media.SpeechSynthesis)
+
+### What's Happening with This SAPI5 Project
+
+- **WinRT/C# SAPI5 reimplementation** ([`winrt-csharp/`](winrt-csharp/)) — proof of concept, may be explored later
+- **Investigation & diagnostics** ([SAPI_STATUS.md](SAPI_STATUS.md)) — preserved for reference
+- **Current Python implementation** — functional but limited by comtypes
+
+**Priority:** The new [ElevenLabs Speech Synthesis Platform](https://github.com/xTaraRose/ElevenLabs-Speech-Synthesis) is now the primary focus. This repository remains as historical context and a reference for the SAPI5 approach.
+
+---
+
 ## Why I built this
 
 *by [@xTaraRose](https://github.com/xTaraRose)*
 
 I was tired of trying to find different implementations to integrate ElevenLabs into different apps and always coming up short with nothing straightforward and simple to use.  Especially with using Calibre a lot — there was realistically nothing out there.
 
-So I present to you the **Windows SAPI Bridge for ElevenLabs**.
+The original **Windows SAPI Bridge for ElevenLabs** was my first attempt at solving this problem by integrating at the system level through SAPI5. While it was a good learning experience and successful proof of concept, it highlighted why a different approach was needed.
 
-It works across the board with anything that uses the Windows SAPI, allowing seamless use of the ElevenLabs TTS engine and resulting in a much better listening experience — no per-app setup, no hacks, no workarounds.  Install once, use everywhere.
+This experience led to the **ElevenLabs Speech Synthesis Platform** — a more flexible, modern, and sustainable solution that doesn't depend on deprecated technology.
 
 ---
 
-## What it does
+## What this project does (SAPI5 Implementation)
 
 Windows TTS is built on the **SAPI5** (Speech API) standard.  Every voice on your system — including Microsoft's built-in ones — is just a COM object registered in the Windows registry.  Any application that uses SAPI for text-to-speech will automatically see and be able to use any registered voice.
 
@@ -37,24 +65,6 @@ This project:
 - 🏠 Home automation / custom scripts using the Windows Speech SDK
 - 🎮 Games and applications with built-in narration
 - Any other software that exposes a "voice selection" dropdown powered by Windows TTS
-
----
-
-## Status
-
-⚠️ **SAPI5 Implementation (Python/comtypes) — Stalled**
-
-The current Python-based SAPI5 engine implementation has reached a fundamental technical limitation. After extensive investigation ([see SAPI_STATUS.md](SAPI_STATUS.md)), the issue is that comtypes' LocalServer32 marshaling layer cannot properly route method invocations from native COM clients to Python methods. While the engine successfully registers and interfaces are discovered correctly, actual method calls (SetObjectToken, Speak, GetOutputFormat) never reach Python code.
-
-**Fixing this would require:**
-- Deep restructuring of comtypes' COM marshaling infrastructure
-- Or reimplementing the engine in C/C++
-
-**Next Steps:**
-
-A modern **WinRT/C# implementation** is in development to replace this approach. WinRT has native .NET interop and better Windows integration, making it more suitable for this use case. See the [WinRT branch](#) for progress.
-
-For now, this SAPI5 implementation remains as reference code and documentation of the approach.
 
 ---
 
