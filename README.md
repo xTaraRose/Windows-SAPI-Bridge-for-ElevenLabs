@@ -63,7 +63,7 @@ pip install comtypes requests
 
 ### 2 — Add your ElevenLabs API key
 
-Open `config.json` in any text editor and replace `YOUR_API_KEY_HERE` with your key:
+Copy `config.example.json` to `config.json` (remove `example` from the filename), then open `config.json` in any text editor and replace `YOUR_API_KEY_HERE` with your key:
 
 ```json
 {
@@ -73,6 +73,8 @@ Open `config.json` in any text editor and replace `YOUR_API_KEY_HERE` with your 
 ```
 
 Keep `config.json` in the **same folder** as the Python scripts.  The engine re-reads it on every Speak call, so changes take effect immediately without reinstalling.
+
+> **Security note:** `config.json` is in `.gitignore` to prevent accidentally committing your real API key to version control.  The `config.example.json` template is safe to commit and shows other users the expected config structure.
 
 ### 3 — Run the installer as Administrator
 
