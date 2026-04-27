@@ -288,27 +288,41 @@ class ElevenLabsTTSEngine(CoClass):
         self._voice_id: str  = ''
         self._config:   dict = {}
         log.info('ElevenLabsTTSEngine instance created')
+        # Log what interfaces were set up
+        log.info('_com_pointers_ has %d entries: %s',
+                 len(self._com_pointers_),
+                 ', '.join(str(g) for g in self._com_pointers_.keys()))
 
     def SetObjectToken(self, pToken):
-        log.info('SetObjectToken() called with pToken=0x%X', pToken or 0)
-        if not pToken:
-            log.info('SetObjectToken: NULL token, returning S_OK')
-            return S_OK
         try:
-            self._config   = load_config()
-            self._voice_id = token_get_string_value(pToken, 'ElevenLabsVoiceId')
-            log.info('SetObjectToken: Successfully set voice_id=%r', self._voice_id)
-            if not self._voice_id:
-                log.warning('SetObjectToken: Warning - voice_id is empty!')
-        except Exception:
-            log.exception('SetObjectToken failed')
-        return S_OK
+            import sys
+            sys.stderr.write(f"[STDERR] SetObjectToken called!\n")
+            sys.stderr.flush()
+            log.info('SetObjectToken() called with pToken=0x%X', pToken or 0)
+            if not pToken:
+                log.info('SetObjectToken: NULL token, returning S_OK')
+                return S_OK
+            try:
+                self._config   = load_config()
+                self._voice_id = token_get_string_value(pToken, 'ElevenLabsVoiceId')
+                log.info('SetObjectToken: Successfully set voice_id=%r', self._voice_id)
+                if not self._voice_id:
+                    log.warning('SetObjectToken: Warning - voice_id is empty!')
+            except Exception:
+                log.exception('SetObjectToken failed')
+            return S_OK
+        except Exception as e:
+            log.exception('SetObjectToken outer exception: %s', e)
+            return E_FAIL
 
     def GetObjectToken(self, ppToken):
         return E_NOTIMPL
 
     def GetOutputFormat(self, pTargetFmtId, pTargetWaveFormatEx,
                         pDesiredFormatId, ppCoMemDesiredWaveFormatEx):
+        import sys
+        sys.stderr.write("[STDERR] GetOutputFormat called!\n")
+        sys.stderr.flush()
         log.info('GetOutputFormat() called')
         try:
             if pDesiredFormatId:
@@ -340,6 +354,9 @@ class ElevenLabsTTSEngine(CoClass):
         """
         Walk SPVTEXTFRAG list → resolve speed → stream ElevenLabs PCM → SAPI.
         """
+        import sys
+        sys.stderr.write("[STDERR] Speak called!\n")
+        sys.stderr.flush()
         log.info('Speak() called! (flags=0x%X, voice_id=%r)', dwSpeakFlags, self._voice_id)
         try:
             if not self._voice_id:
