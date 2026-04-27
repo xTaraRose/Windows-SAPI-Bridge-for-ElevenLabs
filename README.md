@@ -141,11 +141,39 @@ Open any SAPI-compatible application and look for its voice selection — you'll
 
 ## Uninstalling
 
+### Standard Uninstall
+
 ```
 python uninstall_voices.py
 ```
 
-Run as Administrator.  This cleanly removes all SAPI registrations.  Restart any open SAPI applications afterwards.
+Run as Administrator. This cleanly removes all SAPI registrations. Restart any open SAPI applications afterwards.
+
+### Emergency Cleanup
+
+If you experience issues after uninstalling (such as lingering registry entries, high CPU usage from orphaned services, or the uninstall script failing), use the emergency cleanup utility:
+
+```
+python cleanup_sapi_bridge.py
+```
+
+Run as Administrator. This comprehensive cleanup script:
+- Removes all ElevenLabs voice registrations from the registry
+- Removes the engine CLSID registration
+- Cleans up installation state files
+- Optionally preserves your `config.json` (use `--preserve-config` flag)
+- Verifies that all traces have been removed
+
+**Options:**
+- `--preserve-config` — Keep your config.json file instead of deleting it
+- `--verbose` — Show detailed progress for each removal operation
+
+**Example:**
+```
+python cleanup_sapi_bridge.py --preserve-config --verbose
+```
+
+> **Note:** This utility is especially useful if you've moved the SAPI Bridge files to a new location or if the `.installed_voices.json` state file is missing or corrupted.
 
 ---
 
