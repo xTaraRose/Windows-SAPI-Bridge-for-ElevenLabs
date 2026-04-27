@@ -40,6 +40,24 @@ This project:
 
 ---
 
+## Status
+
+⚠️ **SAPI5 Implementation (Python/comtypes) — Stalled**
+
+The current Python-based SAPI5 engine implementation has reached a fundamental technical limitation. After extensive investigation ([see SAPI_STATUS.md](SAPI_STATUS.md)), the issue is that comtypes' LocalServer32 marshaling layer cannot properly route method invocations from native COM clients to Python methods. While the engine successfully registers and interfaces are discovered correctly, actual method calls (SetObjectToken, Speak, GetOutputFormat) never reach Python code.
+
+**Fixing this would require:**
+- Deep restructuring of comtypes' COM marshaling infrastructure
+- Or reimplementing the engine in C/C++
+
+**Next Steps:**
+
+A modern **WinRT/C# implementation** is in development to replace this approach. WinRT has native .NET interop and better Windows integration, making it more suitable for this use case. See the [WinRT branch](#) for progress.
+
+For now, this SAPI5 implementation remains as reference code and documentation of the approach.
+
+---
+
 ## Requirements
 
 | Requirement | Notes |
