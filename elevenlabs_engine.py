@@ -430,7 +430,11 @@ if __name__ == '__main__':
     comtypes.CoInitialize()
     log.info('COM LocalServer32 starting…')
     try:
-        localserver.serve([ElevenLabsTTSEngine])
+        # Try newer comtypes API (run) first, fall back to older API (serve) if needed
+        if hasattr(localserver, 'run'):
+            localserver.run([ElevenLabsTTSEngine])
+        else:
+            localserver.serve([ElevenLabsTTSEngine])
     except Exception:
         log.exception('Fatal error in COM server loop')
         sys.exit(1)
