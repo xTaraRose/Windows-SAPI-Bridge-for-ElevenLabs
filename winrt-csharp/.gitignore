@@ -1,0 +1,38 @@
+## Visual Studio and Build artifacts
+bin/
+obj/
+.vs/
+*.user
+*.userosscache
+*.sln.docstates
+*.suo
+
+## NuGet
+*.nupkg
+*.snupkg
+.nuget/
+
+## Test Results
+TestResults/
+*.trx
+*.coverage
+
+## Build output
+[Dd]ebug/
+[Dd]ebugPublic/
+[Rr]elease/
+[Rr]eleases/
+
+## Configuration
+config.json
+*.log
+
+## IDE
+.idea/
+.vscode/
+*.swp
+*.swo
+
+## OS
+.DS_Store
+Thumbs.db
