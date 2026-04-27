@@ -1,0 +1,29 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net6.0-windows</TargetFramework>
+    <Nullable>enable</Nullable>
+    <LangVersion>latest</LangVersion>
+    <GenerateDocumentationFile>true</GenerateDocumentationFile>
+
+    <AssemblyName>ElevenLabsSpeechSynthesis.Core</AssemblyName>
+    <RootNamespace>ElevenLabsSpeechSynthesis.Core</RootNamespace>
+    <Version>1.0.0</Version>
+    <Description>Core library for ElevenLabs Speech Synthesis Platform - API client, config management, audio handling</Description>
+    <Authors>xTaraRose</Authors>
+    <RepositoryUrl>https://github.com/xTaraRose/Windows-SAPI-Bridge-for-ElevenLabs</RepositoryUrl>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="System.Net.Http.Json" Version="8.0.0" />
+    <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
+    <PackageReference Include="Serilog" Version="3.1.1" />
+    <PackageReference Include="Serilog.Sinks.File" Version="5.0.0" />
+    <PackageReference Include="Serilog.Sinks.Console" Version="5.0.1" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Reference Include="Windows.Foundation" />
+  </ItemGroup>
+
+</Project>

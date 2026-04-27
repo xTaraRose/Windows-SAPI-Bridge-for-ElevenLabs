@@ -1,0 +1,24 @@
+<Project Sdk="Microsoft.NET.Sdk.WindowsDesktop">
+
+  <PropertyGroup>
+    <TargetFramework>net6.0-windows10.0.19041.0</TargetFramework>
+    <OutputType>Library</OutputType>
+    <Nullable>enable</Nullable>
+    <LangVersion>latest</LangVersion>
+
+    <AssemblyName>ElevenLabsSpeechSynthesis.Plugins.WindowsMedia</AssemblyName>
+    <RootNamespace>ElevenLabsSpeechSynthesis.Plugins.WindowsMedia</RootNamespace>
+    <Version>1.0.0</Version>
+    <Description>Windows.Media.SpeechSynthesis provider for ElevenLabs voices</Description>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Windows.Win32" Version="48.0.1" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\Core\ElevenLabsSpeechSynthesis.Core.csproj" />
+    <ProjectReference Include="..\Common\ElevenLabsSpeechSynthesis.Plugins.Common.csproj" />
+  </ItemGroup>
+
+</Project>
